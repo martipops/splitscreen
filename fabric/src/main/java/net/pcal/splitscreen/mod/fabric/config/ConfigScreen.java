@@ -1,4 +1,4 @@
-package net.pcal.splitscreen.config;
+package net.pcal.splitscreen.mod.fabric.config;
 
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
@@ -6,7 +6,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder.CellCreatorBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.pcal.splitscreen.WindowModeImpl;
+import net.pcal.splitscreen.mod.fabric.WindowModeImpl;
 
 public class ConfigScreen {
 

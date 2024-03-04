@@ -95,3 +95,7 @@ curseforge {
         forgeGradleIntegration = false
     }
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/splitscreen.accesswidener")
+}

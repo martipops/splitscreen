@@ -18,7 +18,7 @@
       "net.pcal.splitscreen.mod.fabric.FabricClientInitializer"
     ],
     "modmenu": [
-      "net.pcal.splitscreen.config.ModMenuIntegration"
+      "net.pcal.splitscreen.mod.fabric.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -30,5 +30,6 @@
     "minecraft": "1.20.x",
     "java": ">=17"
   },
-  "conflicts": {}
+  "conflicts": {},
+  "accessWidener":"splitscreen.accesswidener"
 }

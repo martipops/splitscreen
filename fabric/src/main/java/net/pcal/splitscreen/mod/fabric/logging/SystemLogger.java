@@ -22,45 +22,49 @@
  * THE SOFTWARE.
  */
 
-package net.pcal.splitscreen;
+package net.pcal.splitscreen.mod.fabric.logging;
+
+import org.slf4j.Logger;
 
 /**
- * A named, user-selectable rule for sizing and positioning the main minecraft window.  It can describe what the
- * window shape ought to be given a screen resolution.
+ * Singleton logger instance that writes to the serverside console.
  *
  * @author pcal
  * @since 0.0.1
  */
-public interface WindowMode {
+public interface SystemLogger {
 
-    String getName();
-
-    /**
-     * Describes to Minecraft what we want the window to look like in the given context.
-     */
-    WindowDescription getFor(MinecraftWindowContext resolution);
-
-    enum WindowStyle {
-        FULLSCREEN, WINDOWED, SPLITSCREEN
+    static SystemLogger syslog() {
+        return Singleton.INSTANCE;
     }
 
-    /**
-     * Describes to Minecraft what we want the window to look like.
-     */
-    record WindowDescription(WindowStyle style, int x, int y, int width, int height) {
+    void setForceDebugEnabled(boolean debug);
+
+    void error(String message);
+
+    void error(String message, Throwable t);
+
+    default void error(Throwable e) {
+        this.error(e.getMessage(), e);
     }
 
-    /**
-     * Lets Minecraft describe to us the current window and its context.
-     */
-    record MinecraftWindowContext(int screenWidth, int screenHeight, Rectangle windowRect) {
+    void warn(String message);
+
+    void info(String message);
+
+    void debug(String message);
+
+    void debug(String message, Throwable t);
+
+    default void debug(Throwable t) {
+        this.debug(t.getMessage(), t);
     }
 
+    class Singleton {
+        private static SystemLogger INSTANCE = null;
 
-    record WindowContext(MinecraftWindowContext mcContext, Rectangle savedWindowSize) {
+        public static void register(Logger slf4j) {
+            Singleton.INSTANCE = new Slf4jSystemLogger(slf4j);
+        }
     }
-
-    record Rectangle(int x, int y, int width, int height) {
-    }
-
 }

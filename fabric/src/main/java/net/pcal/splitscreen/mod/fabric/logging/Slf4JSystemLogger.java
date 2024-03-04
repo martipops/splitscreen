@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package net.pcal.splitscreen.logging;
+package net.pcal.splitscreen.mod.fabric.logging;
 
 import org.slf4j.Logger;
 

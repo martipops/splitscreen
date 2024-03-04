@@ -1,9 +1,9 @@
-package net.pcal.splitscreen.config;
+package net.pcal.splitscreen.mod.fabric.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.pcal.splitscreen.Mod;
+import net.pcal.splitscreen.mod.fabric.Mod;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,6 @@ public class ConfigHandler {
         } catch (IOException e) {
             logger.error("Splitscreen mod couldn't save config", e);
         }
-
         Mod.mod().onUpdateConfig();
     }
 

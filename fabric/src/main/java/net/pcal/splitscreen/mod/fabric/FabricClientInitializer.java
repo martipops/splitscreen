@@ -27,10 +27,10 @@ package net.pcal.splitscreen.mod.fabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.pcal.splitscreen.logging.SystemLogger;
+import net.pcal.splitscreen.mod.fabric.logging.SystemLogger;
 import org.slf4j.LoggerFactory;
 
-import static net.pcal.splitscreen.Mod.mod;
+import static net.pcal.splitscreen.mod.fabric.Mod.mod;
 
 
 /**

@@ -24,10 +24,10 @@
 
 package net.pcal.splitscreen.mod.fabric.mixins;
 
-import net.pcal.splitscreen.WindowMode.MinecraftWindowContext;
-import net.pcal.splitscreen.WindowMode.Rectangle;
-import net.pcal.splitscreen.WindowMode.WindowDescription;
-import net.pcal.splitscreen.WindowMode.WindowStyle;
+import net.pcal.splitscreen.mod.fabric.WindowMode.MinecraftWindowContext;
+import net.pcal.splitscreen.mod.fabric.WindowMode.Rectangle;
+import net.pcal.splitscreen.mod.fabric.WindowMode.WindowDescription;
+import net.pcal.splitscreen.mod.fabric.WindowMode.WindowStyle;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
@@ -40,8 +40,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 
-import static net.pcal.splitscreen.Mod.mod;
-import static net.pcal.splitscreen.logging.SystemLogger.syslog;
+import static net.pcal.splitscreen.mod.fabric.Mod.mod;
+import static net.pcal.splitscreen.mod.fabric.logging.SystemLogger.syslog;
 import static org.lwjgl.glfw.GLFW.GLFW_DECORATED;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
@@ -98,8 +98,6 @@ public abstract class WindowMixin {
     // ======================================================================
     // Mixins
 
-    @Shadow
-    public abstract void updateDisplay();
 
     @Inject(method = "<init>", at = @At(value = "TAIL"))
     private void Window(WindowEventHandler eventHandler, ScreenManager monitorTracker, DisplayData settings, String videoMode, String title, CallbackInfo ci) {

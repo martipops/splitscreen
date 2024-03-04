@@ -22,23 +22,19 @@
  * THE SOFTWARE.
  */
 
-package net.pcal.splitscreen;
+package net.pcal.splitscreen.mod.fabric;
 
 import net.minecraft.client.Minecraft;
-import net.pcal.splitscreen.WindowMode.MinecraftWindowContext;
-import net.pcal.splitscreen.WindowMode.Rectangle;
-import net.pcal.splitscreen.WindowMode.WindowDescription;
-import net.pcal.splitscreen.WindowMode.WindowStyle;
-import net.pcal.splitscreen.config.ConfigHandler;
+import net.pcal.splitscreen.mod.fabric.WindowMode.MinecraftWindowContext;
+import net.pcal.splitscreen.mod.fabric.WindowMode.Rectangle;
+import net.pcal.splitscreen.mod.fabric.WindowMode.WindowDescription;
+import net.pcal.splitscreen.mod.fabric.WindowMode.WindowStyle;
+import net.pcal.splitscreen.mod.fabric.config.ConfigHandler;
 
 import java.nio.file.Path;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.Window;
-
-import java.lang.reflect.Method;
-
-import static net.pcal.splitscreen.logging.SystemLogger.syslog;
+import static net.pcal.splitscreen.mod.fabric.logging.SystemLogger.syslog;
 
 /**
  * @author pcal
@@ -86,11 +82,9 @@ class ModImpl implements Mod {
 
     private void updateWindow() {
         try {
-            Method m = Window.class.getDeclaredMethod("setMode");
-            m.setAccessible(true);
-            m.invoke(Minecraft.getInstance().getWindow());
+            Minecraft.getInstance().getWindow().setMode();
         } catch (Exception e) {
-            syslog().error(e);
+            syslog().error(e.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package net.pcal.splitscreen.config;
+package net.pcal.splitscreen.mod.fabric.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

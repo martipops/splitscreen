@@ -22,49 +22,44 @@
  * THE SOFTWARE.
  */
 
-package net.pcal.splitscreen.logging;
+package net.pcal.splitscreen.mod.fabric;
 
-import org.slf4j.Logger;
+import net.pcal.splitscreen.mod.fabric.WindowMode.MinecraftWindowContext;
+import net.pcal.splitscreen.mod.fabric.WindowMode.WindowDescription;
+
+import java.nio.file.Path;
 
 /**
- * Singleton logger instance that writes to the serverside console.
+ * Singleton that houses the core mod logic.
  *
  * @author pcal
  * @since 0.0.1
  */
-public interface SystemLogger {
+public interface Mod {
 
-    static SystemLogger syslog() {
+    class Singleton {
+        private static Mod INSTANCE = null;
+    }
+
+    static Mod mod() {
+        synchronized (Mod.class) {
+            if (Singleton.INSTANCE == null) {
+                Singleton.INSTANCE = new ModImpl();
+            }
+        }
         return Singleton.INSTANCE;
     }
 
-    void setForceDebugEnabled(boolean debug);
+    WindowDescription onWindowCreate(MinecraftWindowContext res);
 
-    void error(String message);
+    WindowDescription onToggleFullscreen(MinecraftWindowContext res);
 
-    void error(String message, Throwable t);
+    WindowDescription onResolutionChange(MinecraftWindowContext res);
 
-    default void error(Throwable e) {
-        this.error(e.getMessage(), e);
-    }
+    void onUpdateConfig();
 
-    void warn(String message);
+    void onInitialize(Path configDirectory);
 
-    void info(String message);
+    void onStopping();
 
-    void debug(String message);
-
-    void debug(String message, Throwable t);
-
-    default void debug(Throwable t) {
-        this.debug(t.getMessage(), t);
-    }
-
-    class Singleton {
-        private static SystemLogger INSTANCE = null;
-
-        public static void register(Logger slf4j) {
-            Singleton.INSTANCE = new Slf4jSystemLogger(slf4j);
-        }
-    }
 }

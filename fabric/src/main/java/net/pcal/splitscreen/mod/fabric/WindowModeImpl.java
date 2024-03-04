@@ -22,17 +22,17 @@
  * THE SOFTWARE.
  */
 
-package net.pcal.splitscreen;
+package net.pcal.splitscreen.mod.fabric;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import net.pcal.splitscreen.config.ConfigHandler;
+import net.pcal.splitscreen.mod.fabric.config.ConfigHandler;
 
-import static net.pcal.splitscreen.WindowMode.WindowStyle.FULLSCREEN;
-import static net.pcal.splitscreen.WindowMode.WindowStyle.SPLITSCREEN;
-import static net.pcal.splitscreen.WindowMode.WindowStyle.WINDOWED;
+import static net.pcal.splitscreen.mod.fabric.WindowMode.WindowStyle.FULLSCREEN;
+import static net.pcal.splitscreen.mod.fabric.WindowMode.WindowStyle.SPLITSCREEN;
+import static net.pcal.splitscreen.mod.fabric.WindowMode.WindowStyle.WINDOWED;
 
 /**
  * @author pcal
