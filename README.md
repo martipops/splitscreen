@@ -9,6 +9,9 @@ restart the game.
 This makes it easier for you to start two or more copies of Minecraft and have the windows be positioned automatically 
 for splitscreen.
 
+This mod is designed to be used in conjunction with a Minecraft launcher (such as [PrismLauncher](https://prismlauncher.org/)) and
+a gamepad mod (such [Midnight Controls](https://modrinth.com/mod/midnightcontrols))
+
 ## Usage Video
 
 [![Video](https://github.com/pcal43/splitscreen/blob/pcal/readme-updates/etc/movie-thumb.png?raw=true)](https://youtu.be/QtsTT2dEED0)
@@ -16,7 +19,7 @@ for splitscreen.
 ## Suggested Setup 
 
 ### Stuff you need
-* Two or more copies of minecraft
+* Two or more legal minecraft accounts
 * [PrismLauncher](https://prismlauncher.org/)
 * [Midnight Controls](https://modrinth.com/mod/midnightcontrols)
 * [Splitscreen Support](https://modrinth.com/mod/splitscreen)
@@ -28,16 +31,22 @@ for splitscreen.
 ### What to do
 * Create two or more minecraft instances in PrismLauncher, one for each account
 * In each instance, install SplitScreen Support and MidnightControls
-* Launch each of the instances and configure them 
-  * Hit F11 to get the screens aligned in each one
-  * Get a gamepad for each instance and configure MidnightControls
+* Launch the instances and configure _each_ of them as follows:
+  * **SplitScreen Support**: Press `F11` to position the windows
+  * **MidnightControls**: Enable `Unfocused Input` and `Virtual Mouse` as [described here](https://www.midnightdust.eu/wiki/midnightcontrols/)
+  * **Minecraft**: Press `F3+P` to disable [_Pause on Lost Focus_](https://minecraft.wiki/w/Debug_hotkey)
+* Get a gamepad for each instance and configure MidnightControls
 * In one of the instances, create a new world and 'Open to LAN'
 * Connect the other instances to that one (e.g., localhost:25565)
 * Get your friends and have a Minecraft party!
 
 ## Other mod features
 * Username is displayed in the upper-left corner of the main menu (so you can tell who's who)
-* Skips the 'I Know What I'm Doing' backup screen
+
+## Adjusting the gap between windows
+By default, the mod puts a small gap between windows.  You can change the width of this gap
+(or make it `0`) by setting the value of the `gap` property in `config/splitscreen.properties`.
+(This file doesn't exist until you quit minecraft for the first time with the mod running).
 
 ## Acknowledgements
 * Video courtesy of [wormstweaker](https://www.youtube.com/@WORMSTweaker)
