@@ -30,6 +30,12 @@ import net.pcal.splitscreen.WindowMode.WindowDescription;
 import net.pcal.splitscreen.WindowMode.WindowStyle;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWNativeCocoa;
+import org.lwjgl.system.JNI;
+import org.lwjgl.system.Platform;
+import org.lwjgl.system.macosx.ObjCRuntime;
+
+import static org.lwjgl.system.macosx.ObjCRuntime.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -84,7 +90,6 @@ public abstract class WindowMixin {
     @Shadow
     private Optional<VideoMode> preferredFullscreenVideoMode;
 
-
     @Shadow
     public abstract boolean isFullscreen();
 
@@ -95,15 +100,14 @@ public abstract class WindowMixin {
     @Nullable
     public abstract Monitor findBestMonitor();
 
-    // ======================================================================
-    // Mixins
+    // ====================================================================== Mixins
 
     @Inject(method = "<init>", at = @At(value = "TAIL"))
-    private void Window(WindowEventHandler eventHandler, ScreenManager monitorTracker, DisplayData settings, String videoMode, String title, CallbackInfo ci) {
+    private void Window(WindowEventHandler eventHandler, ScreenManager monitorTracker, DisplayData settings,
+            String videoMode, String title, CallbackInfo ci) {
         // ok so the issue seems to be that this triggers a framebuffersizechanged when it normally wouldn't
-        // minecraftclient is listening for it on resolutionChanged and it isn't ready.  so we probably just need to find
-        // a later time to move the window.
-        //splitscreen_repositionWindow(mod().onWindowCreate(splitscreen_getWindowContext()));
+        // minecraftclient is listening for it on resolutionChanged and it isn't ready. so we probably just need to find a later time to move the window.
+        // splitscreen_repositionWindow(mod().onWindowCreate(splitscreen_getWindowContext()));
     }
 
     @Inject(method = "toggleFullScreen()V", at = @At("HEAD"), cancellable = true)
@@ -165,8 +169,31 @@ public abstract class WindowMixin {
                 this.y = this.windowedY;
                 this.width = this.windowedWidth;
                 this.height = this.windowedHeight;
-                GLFW.glfwSetWindowMonitor(this.handle, 0L, this.x, this.y, this.width, this.height, -1);
-                GLFW.glfwSetWindowAttrib(this.handle, GLFW_DECORATED, wd.style() == WindowStyle.WINDOWED ? GLFW_TRUE : GLFW_FALSE);
+                this.splitscreen_toggleWindowDecorations(wd.style());
         }
+    }
+
+    @Unique
+    private void splitscreen_toggleWindowDecorations(WindowStyle windowStyle) {
+        // Disable window shadow on macOS for splitscreen mode
+        if (Platform.get() == Platform.MACOSX) {
+            try {
+                long nsWindow = GLFWNativeCocoa.glfwGetCocoaWindow(handle);
+                if (nsWindow != 0L) {
+                    long msgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend");
+                    long sel = sel_registerName("setHasShadow:");
+                    JNI.invokePPV(nsWindow, sel, windowStyle == WindowStyle.WINDOWED ? 1 : 0, msgSend);
+                } else {
+                    syslog().warn("Failed to get NSWindow handle for shadow removal");
+                }
+            } catch (Exception e) {
+                syslog().warn("Failed to disable window shadow on macOS: " + e.getMessage());
+            }
+        }
+
+        // Apply window decorator changes
+        GLFW.glfwSetWindowMonitor(this.handle, 0L, this.x, this.y, this.width, this.height, -1);
+        GLFW.glfwSetWindowAttrib(this.handle, GLFW_DECORATED,
+                windowStyle == WindowStyle.WINDOWED ? GLFW_TRUE : GLFW_FALSE);
     }
 }
